@@ -1,0 +1,17 @@
+ipykernel
+
+pandas
+
+pandas-ta
+
+PyMySQL
+
+SQLAlchemy
+
+requests
+
+breeze-connect
+
+backtesting
+
+yfinance

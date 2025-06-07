@@ -19,6 +19,7 @@ def data_process(**kwargs) -> pd.DataFrame:
 
     if isinstance(processed_df, pd.DataFrame):
         print("✅ processed_df is a DataFrame")
+    
 
     processed_df1 = processed_df.rename(columns={
         'close': 'Close',
@@ -40,7 +41,8 @@ def data_process(**kwargs) -> pd.DataFrame:
             remove_cols = [remove_cols]
         existing_cols = [col for col in remove_cols if col in processed_df1.columns]
         processed_df1 = processed_df1.drop(existing_cols, axis=1)
-
+        
+    processed_df1 = processed_df1.groupby(pd.Grouper(key='Date', origin='09:15:00', freq='1h')).agg({'Close': 'last', 'Date': 'last', 'Open': 'first', 'High': 'max', 'Low': 'min'}).dropna()
     if 'Date' in processed_df1.columns:
         processed_df1 = processed_df1.set_index('Date')
     else:
@@ -48,6 +50,7 @@ def data_process(**kwargs) -> pd.DataFrame:
 
     # Filter for trading hours
     processed_df1 = processed_df1.between_time("09:15", "16:50")
+    
 
     processed_df1 = processed_df1.dropna()
     processed_df1 = processed_df1.sort_index()
@@ -57,7 +60,7 @@ def data_process(**kwargs) -> pd.DataFrame:
 
 class SmaCross(Strategy):
     n1 = 14
-    n2 = 14
+    n2 = 30
     def init(self):
         close = self.data.Close
         self.rsi = self.I(calculate_rsi, close, self.n1, name='RSI')

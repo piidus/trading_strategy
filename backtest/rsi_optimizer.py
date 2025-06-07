@@ -94,6 +94,7 @@ def data_process(filepath='tracked_data/nifty_data.csv', **kwargs):
         })
         
         df['Date'] = pd.to_datetime(df['Date'])
+        df = df.groupby(pd.Grouper(key='Date', origin='09:15:00', freq='1h')).agg({'Close': 'last', 'Date': 'last', 'Open': 'first', 'High': 'max', 'Low': 'min'}).dropna()
         df = df.set_index('Date')
         df = df.between_time("09:15", "16:50")
         
@@ -113,7 +114,7 @@ if __name__ == "__main__":
         if data.empty:
             raise ValueError("Processed data is empty!")
             
-        # data = data.iloc[-(365*3):]  # Last 3 years
+        data = data.iloc[-(365*6):]  # Last 3 years
         print(f"Final data shape: {data.shape}")
         
         bt = Backtest(data, OptimizedRSICross,

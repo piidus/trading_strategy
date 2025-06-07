@@ -192,3 +192,16 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+
+# personal avoide
+MTF_PORTFOLIO/data
+MTF_PORTFOLIO/data_10Y
+MTF_PORTFOLIO/data_all
+MTF_PORTFOLIO/data_yahoo
+MTF_PORTFOLIO/yahoo_data
+MTF_PORTFOLIO/*.csv
+
+analysis_data/*
+backtest_old/*.csv
+backtest_old/*txt

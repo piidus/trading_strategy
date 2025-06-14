@@ -16,4 +16,10 @@ backtesting
 
 backtrader
 
+plotly
+
+openpyxl
+
+matplotlib
+
 yfinance

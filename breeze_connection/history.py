@@ -52,6 +52,7 @@ class History:
                 return df
             else:
                 print('DataFrame is empty')
+                print(h_data)
                 return None
         else:
             print(f"Error response: {h_data.get('Error')}")
@@ -122,7 +123,7 @@ class History:
 
 if __name__ == '__main__':
     nifty = History(api_key=API_KEY, api_secret=API_SECRET, api_session=API_SESSION)
-    data = nifty.fetch_data_with_retry(stock_code='NIFTY', interval='30minute')
+    data = nifty.fetch_data_with_retry(stock_code='NIFTY', interval='1minute')
     print(data.head())
     # save data to csv
-    data.to_csv('tracked_data/nifty_data.csv', index=False)
+    # data.to_csv('tracked_data/nifty_data.csv', index=False)

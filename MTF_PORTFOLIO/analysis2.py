@@ -4,8 +4,8 @@ from datetime import datetime
 
 
 
-TOTAL_FUND = 12_00_000
-PER_STOCK_INVEST = 10_000
+TOTAL_FUND = 7_00_000
+PER_STOCK_INVEST = 6_000
 PER_DAY_LIMIT = 3
 HOLDING_FILE = 'MTF_PORTFOLIO/holdings.json'
 PROFIT_DIFFERENCE = 1
@@ -253,14 +253,14 @@ def profit_checker(transaction: pd.DataFrame) -> None:
     if LOAN_BALANCE < 0:
         # reduce PER_STOCK_INVEST by 1/2
         
-        PER_STOCK_INVEST = 10_000 # round(((10_000 + (total_profit_diff * 1_00_000))/120) * 0.75, 2)
+        PER_STOCK_INVEST = 6_000 # round(((10_000 + (total_profit_diff * 1_00_000))/120) * 0.75, 2)
  
         PROFIT_DIFFERENCE = total_profit_diff
         print(f"REDUCING  ::  PER_STOCK_INVEST {PER_STOCK_INVEST}, total profit diff {PROFIT_DIFFERENCE}")
     elif total_profit_diff > PROFIT_DIFFERENCE: # and total_profit_diff < 30:
         print(f"Total profit {total_profit} %")
         if LOAN_BALANCE >= 0:
-            updated_per_stock_invest = round(10_000 + ((total_profit_diff * 1_00_000)* 0.75 / 120), 2)
+            updated_per_stock_invest = round(6_000 + ((total_profit_diff * 1_00_000)* 0.5 / 120), 2)
             if updated_per_stock_invest < 15_000:
                 PER_STOCK_INVEST = updated_per_stock_invest
             else:
@@ -275,8 +275,6 @@ def profit_checker(transaction: pd.DataFrame) -> None:
     #     PER_STOCK_INVEST = round(12_000 + (((total_profit_diff / 2) * 1_00_000) / 120), 2)
     #     PROFIT_DIFFERENCE = total_profit_diff
     #     print(f"PER_STOCK_INVEST {PER_STOCK_INVEST}, total profit diff {PROFIT_DIFFERENCE}")
-
-
 
 
 def portfolio_analysis(df: pd.DataFrame, **kwargs) -> pd.DataFrame:
